@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="241012dc-6fad-4632-9d2d-b87ae654a2c3">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="dataInicio" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="dataFinal" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT s.numeroMatricula, s.idSindicalizado, s.nomeSindicalizado,ca.idCategoria,ca.Descricao, SUM(CAST(l.valorGasto AS DECIMAL(10,2))) FROM lancamento l LEFT JOIN sindicalizado s ON l.Sindicalizado_idSindicalizado = s.idSindicalizado LEFT JOIN convenios c ON l.Convenios_idConvenio = c.idConvenio LEFT JOIN funcionarios f ON l.Funcionarios_idFuncionario = f.idFuncionario LEFT JOIN categoriaconvenio ca ON l.CategoriaConvenio_idCategoria = ca.idCategoria  WHERE STR_TO_DATE (l.dataLancamento, '%d/%m/%Y') >= STR_TO_DATE ($P{dataInicio},'%d/%m/%Y') AND STR_TO_DATE (l.dataLancamento, '%d/%m/%Y') <= STR_TO_DATE ($P{dataFinal}, '%d/%m/%Y') Group By s.numeroMatricula, s.nomeSindicalizado, ca.idCategoria, ca.Descricao]]>
+	</queryString>
+	<field name="numeroMatricula" class="java.lang.Long"/>
+	<field name="idSindicalizado" class="java.lang.Long"/>
+	<field name="nomeSindicalizado" class="java.lang.String"/>
+	<field name="idCategoria" class="java.lang.Long"/>
+	<field name="Descricao" class="java.lang.String"/>
+	<field name="SUM(CAST(l.valorGasto AS DECIMAL(10,2)))" class="java.math.BigDecimal"/>
+	<variable name="soma" class="java.lang.Double" resetType="Group" resetGroup="contra" calculation="Sum">
+		<variableExpression><![CDATA[$F{SUM(CAST(l.valorGasto AS DECIMAL(10,2)))}]]></variableExpression>
+	</variable>
+	<group name="contra">
+		<groupExpression><![CDATA[$F{nomeSindicalizado}]]></groupExpression>
+		<groupHeader>
+			<band height="41">
+				<textField>
+					<reportElement uuid="6f8f2f10-94ef-463f-b429-07cf72299575" x="135" y="0" width="100" height="20"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{nomeSindicalizado}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="2ca16dab-db0a-4bbd-821c-b08a8d45ccda" x="26" y="0" width="109" height="20"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[SINDICALIZADO:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="f2c5a8ff-000c-4451-9e7d-16606a53de27" x="26" y="20" width="68" height="20"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[PERÍODO:]]></text>
+				</staticText>
+				<textField>
+					<reportElement uuid="555e8fc1-ccd3-462b-bf78-3238bc10adab" x="94" y="20" width="81" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{dataInicio}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="c9de8c3f-ca85-462e-a1c6-1c72edcb4c84" x="175" y="20" width="123" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA["até       "+$P{dataFinal}+"."]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement uuid="920197d3-7963-47f6-a75c-2c47be5dbf9a" x="26" y="-1" width="272" height="1"/>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="93">
+				<staticText>
+					<reportElement uuid="a86c15e0-e224-4111-aa11-26f91175171f" mode="Opaque" x="135" y="11" width="63" height="20" backcolor="#E8E7E7"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[TOTAL =]]></text>
+				</staticText>
+				<textField>
+					<reportElement uuid="15b6dfd5-29b7-49a0-84ba-29b1fa5dda9c" mode="Opaque" x="198" y="11" width="100" height="20" backcolor="#E8E7E7"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA["R$"+$V{soma}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement uuid="de227fd8-9df2-41fe-ac3f-6ae81d8f5348" x="26" y="31" width="272" height="1"/>
+				</line>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="descicao">
+		<groupExpression><![CDATA[$F{Descricao}]]></groupExpression>
+		<groupFooter>
+			<band height="38">
+				<textField>
+					<reportElement uuid="0ee642da-5330-46e9-a918-cfc282b9bd72" x="26" y="11" width="88" height="20"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="12" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{Descricao}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="9ec37c2f-55ea-4e4c-8804-fa5a1be7a9da" x="104" y="11" width="94" height="20"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="12"/>
+					</textElement>
+					<text><![CDATA[...............................]]></text>
+				</staticText>
+				<textField>
+					<reportElement uuid="f7e2cead-d8ca-449f-a140-68d2ea1fee22" x="198" y="11" width="100" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA["R$ "+$F{SUM(CAST(l.valorGasto AS DECIMAL(10,2)))}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+</jasperReport>

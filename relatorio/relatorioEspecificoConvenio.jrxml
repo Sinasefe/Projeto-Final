@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="88832c58-75e1-445e-aaea-3d8705f1c7b9">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Crosstab Data Text" hAlign="Center"/>
+	<parameter name="dataInicio" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="dataFinal" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="convenio" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT s.numeroSindicalizado,c.CNPJ, c.nomeFantasia, s.nomeSindicalizado,ca.idCategoria,ca.Descricao, SUM(CAST(l.valorGasto AS DECIMAL(10,2))) FROM lancamento l LEFT JOIN sindicalizado s ON l.Sindicalizado_idSindicalizado = s.idSindicalizado LEFT JOIN convenios c ON l.Convenios_idConvenio = c.idConvenio LEFT JOIN funcionarios f ON l.Funcionarios_idFuncionario = f.idFuncionario LEFT JOIN categoriaconvenio ca ON l.CategoriaConvenio_idCategoria = ca.idCategoria  WHERE c.nomeFantasia = $P{convenio} AND  STR_TO_DATE (l.dataLancamento, '%d/%m/%Y') >= STR_TO_DATE ($P{dataInicio},'%d/%m/%Y') AND STR_TO_DATE (l.dataLancamento, '%d/%m/%Y') <= STR_TO_DATE ($P{dataFinal}, '%d/%m/%Y') Group By s.numeroSindicalizado, s.nomeSindicalizado,ca.idCategoria,ca.Descricao, c.CNPJ, c.nomeFantasia]]>
+	</queryString>
+	<field name="numeroSindicalizado" class="java.lang.Long"/>
+	<field name="CNPJ" class="java.lang.String"/>
+	<field name="nomeFantasia" class="java.lang.String"/>
+	<field name="nomeSindicalizado" class="java.lang.String"/>
+	<field name="idCategoria" class="java.lang.Long"/>
+	<field name="Descricao" class="java.lang.String"/>
+	<field name="SUM(CAST(l.valorGasto AS DECIMAL(10,2)))" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="219" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="00116ffc-f5d5-4e00-a96f-bf39f6c66734" x="90" y="68" width="338" height="35"/>
+				<textElement textAlignment="Right">
+					<font size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Seção Sindical de Inconfidentes - MG]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="555e8fc1-ccd3-462b-bf78-3238bc10adab" x="198" y="179" width="80" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA["De "+$P{dataInicio}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="97cd3423-27e8-46a7-9826-b42cee203513" x="318" y="116" width="110" height="20"/>
+				<textElement/>
+				<text><![CDATA[Telefax 35-3464.1297]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="ea0ae221-42bd-4944-8e43-e09e90be3b37" x="183" y="96" width="171" height="20"/>
+				<textElement/>
+				<text><![CDATA[Fundada em 24 de Maio de 1991]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="8b79da69-ef74-4c1d-a531-52a2b00c14d2" x="153" y="148" width="201" height="31"/>
+				<textElement textAlignment="Center">
+					<font size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Relatório De Gastos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="f2c5a8ff-000c-4451-9e7d-16606a53de27" x="153" y="179" width="60" height="20"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Período:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="c9de8c3f-ca85-462e-a1c6-1c72edcb4c84" x="278" y="179" width="75" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["até "+$P{dataFinal}+"."]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="eb56d97f-6e78-4a78-8d94-266e755e5003" x="219" y="116" width="85" height="20"/>
+				<textElement/>
+				<text><![CDATA[CEP 37576-000 -]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="dc45ae3a-85c0-486e-9785-0c346d51d0a7" x="8" y="115" width="555" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="a57c0df4-ce78-4f76-a863-3a577b005c60" x="0" y="212" width="555" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="b4595b4c-1206-412e-abaa-d5b3c1cb5af7" x="16" y="116" width="192" height="20"/>
+				<textElement/>
+				<text><![CDATA[Rua Marília de Dirceu nº 177 Apto 02-]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="a762c50c-58ed-4aa5-90c2-2fb3398cfdad" x="133" y="22" width="315" height="66"/>
+				<textElement textAlignment="Center">
+					<font fontName="Engravers MT" size="40" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sinasefe]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="f48bbd73-5e0f-4945-beb8-49175b3ea20d" x="448" y="116" width="107" height="20"/>
+				<textElement/>
+				<text><![CDATA[INCONFIDENTES, MG]]></text>
+			</staticText>
+		</band>
+	</title>
+	<summary>
+		<band height="88" splitType="Stretch">
+			<crosstab>
+				<reportElement uuid="6e821597-a5d8-472d-9d90-4085d1b85bb2" x="0" y="0" width="555" height="88"/>
+				<crosstabHeaderCell>
+					<cellContents>
+						<staticText>
+							<reportElement uuid="afbed16a-b965-402a-a340-979dde8b2efb" style="Crosstab Data Text" mode="Opaque" x="206" y="0" width="101" height="26" backcolor="#F6F5F5"/>
+							<textElement textAlignment="Right" verticalAlignment="Middle"/>
+							<text><![CDATA[CNPJ:]]></text>
+						</staticText>
+						<staticText>
+							<reportElement uuid="5198176d-d624-4316-b54b-648df29e90ca" style="Crosstab Data Text" mode="Opaque" x="206" y="26" width="101" height="27" backcolor="#F6F5F5"/>
+							<textElement textAlignment="Right" verticalAlignment="Middle"/>
+							<text><![CDATA[Convênio:]]></text>
+						</staticText>
+						<staticText>
+							<reportElement uuid="35007b89-1888-440a-bf19-20f11f2bccf0" style="Crosstab Data Text" mode="Opaque" x="97" y="78" width="70" height="27" backcolor="#CCCCCC"/>
+							<textElement verticalAlignment="Middle">
+								<font size="12" isBold="true"/>
+							</textElement>
+							<text><![CDATA[SIAPE]]></text>
+						</staticText>
+						<staticText>
+							<reportElement uuid="3ed6be4d-a88b-473b-942b-e56c8bde6b12" style="Crosstab Data Text" mode="Opaque" x="167" y="78" width="140" height="27" backcolor="#CCCCCC"/>
+							<textElement verticalAlignment="Middle">
+								<font size="12" isBold="true"/>
+							</textElement>
+							<text><![CDATA[SINDICALIZADO]]></text>
+						</staticText>
+					</cellContents>
+				</crosstabHeaderCell>
+				<rowGroup name="numeroSindicalizado" width="167" totalPosition="End">
+					<bucket class="java.lang.Long">
+						<bucketExpression><![CDATA[$F{numeroSindicalizado}]]></bucketExpression>
+					</bucket>
+					<crosstabRowHeader>
+						<cellContents backcolor="#FFFFFF" mode="Opaque">
+							<textField>
+								<reportElement uuid="2b1f4496-6542-41d9-ba87-fbce4662c9f0" style="Crosstab Data Text" x="97" y="0" width="70" height="25"/>
+								<textElement verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$V{numeroSindicalizado}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabRowHeader>
+					<crosstabTotalRowHeader>
+						<cellContents backcolor="#FFFFFF" mode="Opaque">
+							<staticText>
+								<reportElement uuid="234a21c6-c417-4529-92b5-49e6297c537f" mode="Opaque" x="167" y="0" width="140" height="25" forecolor="#000000" backcolor="#CCCCCC"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="12" isBold="true"/>
+								</textElement>
+								<text><![CDATA[TOTAL GASTOS:]]></text>
+							</staticText>
+						</cellContents>
+					</crosstabTotalRowHeader>
+				</rowGroup>
+				<rowGroup name="nomeSindicalizado" width="140" totalPosition="End">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{nomeSindicalizado}]]></bucketExpression>
+					</bucket>
+					<crosstabRowHeader>
+						<cellContents backcolor="#F0F8FF" mode="Opaque">
+							<textField>
+								<reportElement uuid="646c8bfe-6ad9-4717-8e23-206ab30c6389" style="Crosstab Data Text" mode="Opaque" x="0" y="0" width="140" height="25"/>
+								<textElement verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$V{nomeSindicalizado}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabRowHeader>
+					<crosstabTotalRowHeader>
+						<cellContents backcolor="#FFFFFF" mode="Opaque"/>
+					</crosstabTotalRowHeader>
+				</rowGroup>
+				<columnGroup name="CNPJ" height="27">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{CNPJ}]]></bucketExpression>
+					</bucket>
+					<crosstabColumnHeader>
+						<cellContents backcolor="#F0F8FF" mode="Opaque">
+							<textField>
+								<reportElement uuid="a807dba9-122d-42ca-9b5c-8291a2ba23fc" style="Crosstab Data Text" mode="Opaque" x="0" y="0" width="142" height="26" backcolor="#F6F5F5"/>
+								<textElement verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$V{CNPJ}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabColumnHeader>
+					<crosstabTotalColumnHeader>
+						<cellContents/>
+					</crosstabTotalColumnHeader>
+				</columnGroup>
+				<columnGroup name="nomeFantasia" height="79">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{nomeFantasia}]]></bucketExpression>
+					</bucket>
+					<crosstabColumnHeader>
+						<cellContents backcolor="#FFFFFF" mode="Opaque">
+							<textField>
+								<reportElement uuid="863dcf57-89a9-4a1e-9229-ad251fd968b7" style="Crosstab Data Text" mode="Opaque" x="0" y="0" width="142" height="25" backcolor="#F6F5F5"/>
+								<textElement verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$V{nomeFantasia}]]></textFieldExpression>
+							</textField>
+							<staticText>
+								<reportElement uuid="b46f288c-6bff-4752-8e00-754cfd8cc4c9" style="Crosstab Data Text" mode="Opaque" x="0" y="51" width="142" height="27" backcolor="#CCCCCC"/>
+								<textElement verticalAlignment="Middle">
+									<font size="12" isBold="true"/>
+								</textElement>
+								<text><![CDATA[VALOR GASTO]]></text>
+							</staticText>
+						</cellContents>
+					</crosstabColumnHeader>
+					<crosstabTotalColumnHeader>
+						<cellContents/>
+					</crosstabTotalColumnHeader>
+				</columnGroup>
+				<measure name="SUM(CAST(l.valorGasto AS DECIMAL(10,2)))Measure" class="java.math.BigDecimal" calculation="Sum">
+					<measureExpression><![CDATA[$F{SUM(CAST(l.valorGasto AS DECIMAL(10,2)))}]]></measureExpression>
+				</measure>
+				<crosstabCell width="142" height="25">
+					<cellContents>
+						<textField>
+							<reportElement uuid="6ca7e810-15a6-4f0d-9c95-e1e4771b40c4" style="Crosstab Data Text" x="0" y="0" width="142" height="25"/>
+							<textElement verticalAlignment="Middle"/>
+							<textFieldExpression><![CDATA[$V{SUM(CAST(l.valorGasto AS DECIMAL(10,2)))Measure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="142" height="25" rowTotalGroup="numeroSindicalizado">
+					<cellContents backcolor="#CBCBF6" mode="Opaque">
+						<textField>
+							<reportElement uuid="dce6b084-a68a-456c-b832-11ab60c386fb" style="Crosstab Data Text" x="0" y="0" width="142" height="25" forecolor="#000000"/>
+							<textElement verticalAlignment="Middle"/>
+							<textFieldExpression><![CDATA[$V{SUM(CAST(l.valorGasto AS DECIMAL(10,2)))Measure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="50" columnTotalGroup="CNPJ">
+					<cellContents backcolor="#005FB3" mode="Opaque">
+						<textField>
+							<reportElement uuid="01aae144-e10f-4bbc-bbe5-70b0bed76c55" style="Crosstab Data Text" x="0" y="0" width="50" height="25" forecolor="#FFFFFF"/>
+							<textElement/>
+							<textFieldExpression><![CDATA[$V{SUM(CAST(l.valorGasto AS DECIMAL(10,2)))Measure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell rowTotalGroup="numeroSindicalizado" columnTotalGroup="CNPJ">
+					<cellContents backcolor="#005FB3" mode="Opaque">
+						<textField>
+							<reportElement uuid="e951e502-d787-4b9e-98b1-a5302198fee7" style="Crosstab Data Text" x="0" y="0" width="50" height="25" forecolor="#FFFFFF"/>
+							<textElement/>
+							<textFieldExpression><![CDATA[$V{SUM(CAST(l.valorGasto AS DECIMAL(10,2)))Measure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="50" columnTotalGroup="nomeFantasia">
+					<cellContents backcolor="#BFE1FF" mode="Opaque">
+						<textField>
+							<reportElement uuid="7c1bcca7-d3c6-4304-bb38-5cfc31db8f18" style="Crosstab Data Text" x="0" y="0" width="50" height="25"/>
+							<textElement/>
+							<textFieldExpression><![CDATA[$V{SUM(CAST(l.valorGasto AS DECIMAL(10,2)))Measure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell rowTotalGroup="numeroSindicalizado" columnTotalGroup="nomeFantasia">
+					<cellContents backcolor="#005FB3" mode="Opaque">
+						<textField>
+							<reportElement uuid="dad58a91-5ec7-4e9c-8c8b-65d6763e5f84" style="Crosstab Data Text" x="0" y="0" width="50" height="25" forecolor="#FFFFFF"/>
+							<textElement/>
+							<textFieldExpression><![CDATA[$V{SUM(CAST(l.valorGasto AS DECIMAL(10,2)))Measure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="142" height="1" rowTotalGroup="nomeSindicalizado">
+					<cellContents backcolor="#FFFFFF" mode="Transparent"/>
+				</crosstabCell>
+				<crosstabCell rowTotalGroup="nomeSindicalizado" columnTotalGroup="CNPJ">
+					<cellContents backcolor="#005FB3" mode="Opaque">
+						<textField>
+							<reportElement uuid="aa1ca8b1-d79c-44d1-941f-24d03be1a0b8" style="Crosstab Data Text" x="0" y="0" width="50" height="25" forecolor="#FFFFFF"/>
+							<textElement/>
+							<textFieldExpression><![CDATA[$V{SUM(CAST(l.valorGasto AS DECIMAL(10,2)))Measure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell rowTotalGroup="nomeSindicalizado" columnTotalGroup="nomeFantasia">
+					<cellContents backcolor="#BFE1FF" mode="Opaque">
+						<textField>
+							<reportElement uuid="f9b82c3e-a30e-4c7e-b84b-35264426f65e" style="Crosstab Data Text" x="0" y="0" width="50" height="25"/>
+							<textElement/>
+							<textFieldExpression><![CDATA[$V{SUM(CAST(l.valorGasto AS DECIMAL(10,2)))Measure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+			</crosstab>
+		</band>
+	</summary>
+</jasperReport>
